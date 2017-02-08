@@ -100,8 +100,10 @@
                             &:hover {
                                 background-color: #dbdfee;
                                 .badge {
-                                    background-color: #dbdfee;
-                                    transform: scale(1.2) rotate(360deg);
+//                                  background-color: #dbdfee;
+//                                  transform: scale(1.2) rotate(360deg);
+                                    color: black;
+                                    font-weight: bolder;
                                 }
                             }
                             .name {
@@ -109,16 +111,14 @@
                             }
                             .badge {
                                 display: block;
-
-                                // width: 20px;
                                 float: right;
                                 text-align: center;
                                 margin-right: 15px;
                                 margin-top: 3px;
-                                padding: 0 10px;
+                                padding: 0 8px;
                                 font-size: 12px;
-                                color: #fff;
-                                background-color: #bbb;
+//                              color: #fff;
+//                              background-color: #bbb;
                                 border-radius: 50%;
                                 transition: 0.5s ease-in-out;
                             }
