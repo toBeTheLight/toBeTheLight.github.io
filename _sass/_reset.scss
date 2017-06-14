@@ -69,12 +69,17 @@ h5 {
 h6 {
     font-size: 18px;
 }
-h2,
+h2 {
+    margin: 40px 0 20px;
+}
+h2{
+    font-weight:900;
+}
 h3,
 h4,
 h5,
 h6 {
-    margin: 40px 0 20px;
+   margin: 20px 0 20px;
 }
 blockquote {
     color: #444;
