@@ -34,28 +34,28 @@ tags:  study
 
 ## 对象的创建与属性修改
 
-### Object.create
+### Object.create()
 `Object.create(proto, [ propertiesObject ])`  
 此api的作用是以`proto`为原型，以`propertiesObject`中**自有属性**(不包含`propertiesObject`的原型上的属性，包含所有不可枚举属性)为属性创建一个新的对象。
 ```js
 // 非严格模式下运行，严格模式下会抛出异常
 const proto = {
-	saySize () {
-		console.log(this.size)
-	}
+  saySize () {
+    console.log(this.size)
+  }
 }
 const propertiesObject = {
-	size: {
-		enumerable: false,
-		configurable: false,
-		value: 'large'
-	},
-	color: {
-		writable: true,
-		enumerable: true,
-		configurable: true,
-		value: 'red'
-	}
+  size: {
+    enumerable: false,
+    configurable: false,
+    value: 'large'
+  },
+  color: {
+    writable: true,
+    enumerable: true,
+    configurable: true,
+    value: 'red'
+ }
 }
 let newObj = Object.create(proto, propertiesObject)
 
@@ -71,7 +71,7 @@ console.log(newObj.size, newObj.color)
 
 // enumerbale
 for(key in newObj){
-	console.log(key)
+  console.log(key)
 }
 // "color"
 // "saySize"
@@ -90,32 +90,32 @@ delete newObj.color
 ```js
 let tempObj1 = {}
 Object.defineProperty(tempObj, 'name', {
-	value: 'temp',
-	writable: false,
-	enumerable: true,
-	configurable: false
+  value: 'temp',
+  writable: false,
+  enumerable: true,
+  configurable: false
 })
 console.log(tempObj)
 // Object {name: "temp"}
 
 // 抛出异常
 Object.defineProperty(tempObj, 'name', {
-	value: temp,
-	writable: true
+  value: temp,
+  writable: true
 })
 ```
-对于configurable： false  的属性禁止修改属性描述符，会抛出异常。
-当然对于writable： true 的属性仍然可以通过点运算符的形式复写。
+对于`configurable： false`的属性禁止修改属性描述符，会抛出异常。
+当然对于`writable： true`的属性仍然可以通过点运算符的形式复写。
 
 ```js
 let tempObj2 = {_name: 'temp2'}
 Object.defineProperty(tempObj2, 'name', {
-	get () {
-		return `名字为${this._name}`
-	},
-	set (value) {
-		console.log(`新名字为${value}`)
-	}
+  get () {
+    return `名字为${this._name}`
+  },
+  set (value) {
+    console.log(`新名字为${value}`)
+  }
 })
 console.log(tempObj2.name)
 // "名字为temp2"
@@ -131,15 +131,15 @@ tempObj2.name = 'temp2.0'
 ```js
 let tempObj3 = {name:'temp'}
 Object.defineProperties(tempObj3, {
-	name: {
-		value: 'newTemp',
-		writable: true
-	},
-	color: {
-		value: 'red',
-		writable: true,
-		enumerable: true
-	}
+  name: {
+    value: 'newTemp',
+    writable: true
+  },
+  color: {
+    value: 'red',
+    writable: true,
+    enumerable: true
+  }
 })
 console.log(tempObj3)
 // Object {name: "newTemp", color: "red"}
@@ -152,14 +152,14 @@ console.log(tempObj3)
 ```js
 const supSymbol = Symbol('supSymbol')
 const proto = Object.create(null, {
-	supTrue: {
-		value: 'value1',
-	enumerable: true
+  supTrue: {
+    value: 'value1',
+  enumerable: true
 },
 supFalse: {
-	value: 'value2',
-		enumerable: false
-	}
+  value: 'value2',
+    enumerable: false
+  }
 })
 proto[supSymbol] = 'supSymbol'
 console.log(proto)
@@ -169,14 +169,14 @@ console.log(proto)
 //  supFalse: "value2"
 // }
 let obj = Object.create(proto, {
-	ownTrue: {
-		value: 'value1',
-	  enumerable: true
+  ownTrue: {
+    value: 'value1',
+    enumerable: true
 },
 ownFalse: {
-	  value: 'value2',
-		enumerable: false
-	}
+    value: 'value2',
+    enumerable: false
+  }
 })
 obj[Symbol('ownSymbol')] = 'ownSymbol'
 // ok，obj可用
