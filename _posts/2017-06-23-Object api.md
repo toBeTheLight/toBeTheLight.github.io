@@ -85,7 +85,7 @@ delete newObj.color
 
 ### Object.defineProperty()
 `Object.defineProperty(obj, prop, descriptor)`  
-此api允许修改或向`obj`添加属性
+此api允许修改或向`obj`添加属性  
 `obj`为目标对象，`prop`为要修改或添加的属性，`descriptor`为属性描述符
 ```js
 let tempObj1 = {}
@@ -105,7 +105,6 @@ Object.defineProperty(tempObj, 'name', {
 })
 ```
 对于`configurable： false`的属性禁止修改属性描述符，会抛出异常。
-当然对于`writable： true`的属性仍然可以通过点运算符的形式复写。
 
 ```js
 let tempObj2 = {_name: 'temp2'}
@@ -145,12 +144,11 @@ console.log(tempObj3)
 // Object {name: "newTemp", color: "red"}
 ```
 ## 对象属性的检测与检索
-我们也看到了对于`enumerable:false`的属性是不可枚举的。甚至ES6中还有“隐蔽性”更高的`Symbol()`可以作为键值。那么怎么才能正确的检测与获取对象的属性呢？
+我们也看到了对于`enumerable:false`的属性是不可枚举的。甚至ES6中还有“隐蔽性”更高的`Symbol()`可以作为属性键。那么怎么才能正确的检测与获取对象的属性呢？
 
 我们先创建一个对象用于实验后续的所有方法。  
 原型和自身都各包含三种属性：`enumerable: false`,`enumerable: true`,`Symbol()`
 ```js
-const supSymbol = Symbol('supSymbol')
 const proto = Object.create(null, {
   supTrue: {
     value: 'value1',
@@ -161,7 +159,7 @@ supFalse: {
     enumerable: false
   }
 })
-proto[supSymbol] = 'supSymbol'
+proto[Symbol('supSymbol')] = 'supSymbol'
 console.log(proto)
 // {
 //  supTrue: "value",
@@ -247,4 +245,4 @@ const obj = {key: 'value1'}
 obj.key = 'value2' // 可完成
 obj = {key2: 'value2'} // 更改指针，抛出异常
 ```
-此时就可以使用上述三个api。
+此时就可以使用上述三个把对象关起来的api。
