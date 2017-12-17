@@ -2,7 +2,8 @@
 layout: post
 title:  "Object api"
 categories: JavaScript Object
-tags:  study
+tags:  study JavaScript
+author: toBeTheLight
 ---
 
 * content
