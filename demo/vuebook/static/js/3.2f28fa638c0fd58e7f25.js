@@ -1,0 +1,2 @@
+webpackJsonp([3],{ufLc:function(e,t){},vn0N:function(e,t,i){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var s=i("1IbS"),n={data:function(){return{asideList:[s.c,s.e,s.d,s.f,s.a]}}},a={render:function(){var e=this.$createElement,t=this._self._c||e;return t("div",{staticClass:"guide menu-page"},[t("vb-aside",{attrs:{list:this.asideList}}),this._v(" "),t("router-view")],1)},staticRenderFns:[]},c=i("VU/8")(n,a,!1,function(e){i("ufLc")},"data-v-8d0c212c",null);t.default=c.exports}});
+//# sourceMappingURL=3.2f28fa638c0fd58e7f25.js.map

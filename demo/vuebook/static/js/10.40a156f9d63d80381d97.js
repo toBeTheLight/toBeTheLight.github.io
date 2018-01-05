@@ -1,0 +1,2 @@
+webpackJsonp([10],{DP45:function(e,t){},qC4l:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r={render:function(){var e=this.$createElement;return(this._self._c||e)("h1",[this._v("资源")])},staticRenderFns:[]},s=n("VU/8")({},r,!1,function(e){n("DP45")},null,null);t.default=s.exports}});
+//# sourceMappingURL=10.40a156f9d63d80381d97.js.map
