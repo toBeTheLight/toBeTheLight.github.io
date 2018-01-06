@@ -1,2 +1,0 @@
-webpackJsonp([4],{UCiS:function(t,e){},p1GY:function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r={render:function(){var t=this.$createElement,e=this._self._c||t;return e("vb-content",[e("vb-md",{attrs:{md:this.md}})],1)},staticRenderFns:[]},a=n("VU/8")({data:function(){return{md:""}}},r,!1,function(t){n("UCiS")},"data-v-7ea179ff",null);e.default=a.exports}});
-//# sourceMappingURL=4.a07fbbf1735ed5698783.js.map
