@@ -7,7 +7,7 @@ author: toBeTheLight
 ---
 
 * content
-{:toc}
+{:toc}  
 本章主要看一下day02中提到的initState，并找到vue实现动态响应和各个数据关联的重点`defineReactive`、`Dep`、`new Watcher`函数。在看完day02提到的`vm.$mount()`，再回来看这几个函数。
 
 
@@ -83,7 +83,7 @@ function initProps (vm: Component, propsOptions: Object) {
 }
 ```
 重点是`defineReactive(props, key, value)`
-要看下defineReactive
+要看下defineReactive。
 
 ## 2. initMethods
 ```js
@@ -138,7 +138,7 @@ function initData (vm: Component) {
 }
 ```
 重点是`observe(data, true /* asRootData */)`
-等下看些observe
+等下看下observe。
 
 ## 4. initComputed
 ```js
@@ -194,7 +194,7 @@ function initWatch (vm: Component, watch: Object) {
 4. initComputed -> new Watcher 和 defineComputed -> createComputedGetter
 5. initWatch -> createWatcher -> vm.$watch -> new Watcher
 
-从中我们可以看到关键在于`defineReactive`、`Dep`、`new Watcher`部分。
+从中我们可以看到关键在于`defineReactive`、`Dep`、`observe`、`new Watcher`部分。
 我们看完day02中提到的`vm.$mount()`再来看这几个函数。
 
 # 补充
