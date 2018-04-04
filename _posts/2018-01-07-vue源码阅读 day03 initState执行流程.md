@@ -21,7 +21,7 @@ author: toBeTheLight
 针对各配置属性进行了动态响应的设置
 ```js
 function initState (vm: Component) {
-  // 应该是watchers监听队列，做数据绑定的东西
+  // 应该是watchers监听者队列，做数据绑定的东西
   vm._watchers = []
   const opts = vm.$options
   // 有props 初始化prop
@@ -128,7 +128,7 @@ function initData (vm: Component) {
      * 2. 是否与props重复
      * 3. 是否可能是保留属性
      */
-    // 不是保留属性则进行set、get
+    // 不是保留属性则进行属性代理，将data上的属性代理为vm上可取，如this.aaa
     if (!isReserved(key)) {
       proxy(vm, `_data`, key)
     }
@@ -146,6 +146,7 @@ function initComputed (vm: Component, computed: Object) {
   const watchers = vm._computedWatchers = Object.create(null)
   const isSSR = isServerRendering()
   for (const key in computed) {
+    // 获取要执行的computed函数，因为可能是对象
     const userDef = computed[key]
     const getter = typeof userDef === 'function' ? userDef : userDef.get
     // 此处删除了对计算属性getter必须的验证
@@ -166,7 +167,8 @@ function initComputed (vm: Component, computed: Object) {
   }
 }
 ```
-应该是基于watch的。然后对computed的get方法做了基于watch的重写。
+~~应该是基于watch的。然后对computed的get方法做了基于watch的重写。~~
+Watcher类是观察者类，与其依赖的值进行关联
 等下看下Watcher构造函数和createComputedGetter方法
 
 ## 5. initWatch
