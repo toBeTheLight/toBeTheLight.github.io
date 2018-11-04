@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    div {
+      border: 1px solid black;
+      padding: 10px;
+    }
+  </style>
+  <script src="./base.js"></script>
+  <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+</head>
+<body>
+<div>
+  1. 直接打开
+</div>
+<script src="./direct.js"></script>
+<div>
+  2. button 点击后同步打开
+  <button id="group2-1">window.open</button>
+  <button id="group2-2">a.click</button>
+  <button id="group2-3">form.submit</button>
+  <button id="group2-4">button.click</button>
+</div>
+<script src="./button-click-direct.js"></script>
+<div>
+  3. button 点击后延时打开
+  <button id="group3-1">window.open</button>
+  <button id="group3-2">a.click</button>
+  <button id="group3-3">form.submit</button>
+  <button id="group3-4">button.click</button>
+</div>
+<script src="./button-click-timeout.js"></script>
+<div>
+  4. button 点击后触发请求，请求回调中打开
+  <button id="group4-1">window.open</button>
+  <button id="group4-2">a.click</button>
+  <button id="group4-3">form.submit</button>
+  <button id="group4-4">button.click</button>
+</div>
+<script src="./button-click-ajax.js"></script>
+<div>
+  5. input keydown后直接打开
+  <input type="text" id="group5-1" placeholder="回车 window.open">
+  <input type="text" id="group5-2" placeholder="回车 a.click">
+  <input type="text" id="group5-3" placeholder="回车 form.submit">
+  <input type="text" id="group5-4" placeholder="回车 button.click">
+  <script src="./keyboard-direct.js"></script>
+</div>
+<div>
+  6. input keydown后延迟打开
+  <input type="text" id="group6-1" placeholder="回车 window.open">
+  <input type="text" id="group6-2" placeholder="回车 a.click">
+  <input type="text" id="group6-3" placeholder="回车 form.submit">
+  <input type="text" id="group6-4" placeholder="回车 button.click">
+  <script src="./keyboard-timeout.js"></script>
+</div>
+<div>
+  7. input keydown后触发请求，请求回调中打开
+  <input type="text" id="group7-1" placeholder="回车 window.open">
+  <input type="text" id="group7-2" placeholder="回车 a.click">
+  <input type="text" id="group7-3" placeholder="回车 form.submit">
+  <input type="text" id="group7-4" placeholder="回车 button.click">
+  <script src="./keyboard-ajax.js"></script>
+</div>
+</body>
+</html>
