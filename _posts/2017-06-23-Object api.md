@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Object api"
-categories: JavaScript Object
-tags:  study JavaScript
+categories: JavaScript
+tags:  study JavaScript 基本语法
 author: toBeTheLight
 ---
 
