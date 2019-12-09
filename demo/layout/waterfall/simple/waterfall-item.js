@@ -12,7 +12,6 @@ Vue.component('waterfall-item', {
       const width = this.$parent.colWidth
       return {
         transform: `translate3d(${left}px,${top}px,0)`,
-        transition: `transform .5s linear`,
         width: `${width}px`,
         'background-color': `rgb(${255 - left%255}, ${255 - top%255}, ${(255 - left+top)/255})`
       }
