@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    html, body{
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+    #app {
+      width: 100%;
+      height: 100%;
+      font-family: 'Avenir', Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-align: center;
+      color: #2c3e50;
+    }
+    .waterfall {
+      position: relative;
+      width: 100%;
+      min-height: 100%;
+      overflow-x: hidden;
+    }
+    .waterfall-item {
+      box-sizing: border-box;
+      border: 1px solid black;
+      position: absolute;
+      left: 0;
+      right: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <waterfall :column-count="5" :gutter-width="20" :gutter-height="20">
+      <waterfall-item v-for="(height, index) in list" :key="index" :style="{height: `${height}px`}">
+        {{index}}
+      </waterfall-item>
+    </waterfall>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+  <script src="https://cdn.bootcss.com/lodash.js/4.17.15/lodash.core.min.js"></script>
+  <script src="./waterfall.js"></script>
+  <script src="./waterfall-item.js"></script>
+  <script>
+    new Vue({
+      name: 'app',
+      el: "#app",
+      data () {
+        return {
+          list: []
+        }
+      },
+      created () {
+        setInterval(() => {
+          this.list.push(200* Math.random())
+        }, 500)
+      }
+    })
+  </script>
+</body>
+</html>
