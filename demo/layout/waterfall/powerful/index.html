@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    html, body{
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+    #app {
+      width: 100%;
+      height: 100%;
+      font-family: 'Avenir', Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-align: center;
+      color: #2c3e50;
+    }
+    .waterfall {
+      position: relative;
+      width: 100%;
+      min-height: 100%;
+      overflow-x: hidden;
+    }
+    .waterfall-item {
+      position: absolute;
+      left: 0;
+      right: 0;
+      overflow: hidden;
+      box-sizing: border-box;
+      border: 1px solid black ;
+    }
+    .waterfall-item-shadow {
+      height: 100%;
+      left: 0;
+      overflow: auto;
+      position: absolute;
+      top: 0;
+      transform: translateX(200%);
+      width: 100%;
+    }
+    .waterfall-item-holder--bigger {
+      height: 200000px;
+    }
+    .waterfall-item-holder--smaller {
+      height: 200%;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <waterfall :column-count="3" :gutter-width="20" :gutter-height="20">
+      <waterfall-item v-for="(height, index) in list" :key="index" :style="{fontSize: `${height}px`}">
+        {{index}}
+      </waterfall-item>
+    </waterfall>
+  </div>
+  <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+  <script src="https://cdn.bootcss.com/lodash.js/4.17.15/lodash.core.min.js"></script>
+  <script src="./waterfall.js"></script>
+  <script src="./waterfall-item.js"></script>
+  <script>
+    let list = new Array(30).fill(0)
+    list = list.map(i => Math.random() * 50 + 10)
+    console.log(list)
+    new Vue({
+      name: 'app',
+      el: "#app",
+      data () {
+        return {
+          list: list
+        }
+      },
+      created () {
+        setInterval(()=> {
+          this.list = list.map((d, i) => {
+            if (i%3 ===0 || i%5 ===0) {
+              return Math.random() * 50 + 10
+            }
+            return d
+          })
+        }, 2000)
+      }
+    })
+  </script>
+</body>
+</html>

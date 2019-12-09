@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <button id="btn1">button -</button>
+    <button id="btn2">button +</button>
+    <div id="app" style="height: 300px;border: 1px solid black;overflow: auto;">
+        <div style="height: 210%"></div>
+    </div>
+    <script>
+        let height = 300
+        document.querySelector('#app').scrollTop = '20000'
+        document.querySelector('#app').addEventListener('scroll', () => {
+            console.log('sizeChange')
+            document.querySelector('#app').scrollTop = '20000'
+        })
+        document.querySelector('#btn1').addEventListener('click', () => {
+            height -= 10
+            document.querySelector('#app').style.height = `${height}px`
+        })
+        document.querySelector('#btn2').addEventListener('click', () => {
+            height += 10
+            document.querySelector('#app').style.height = `${height}px`
+        })
+    </script>
+</body>
+</html>
