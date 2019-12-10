@@ -33,7 +33,8 @@ Vue.component('waterfall-item', {
       return {
         transform: `translate3d(${left}px,${top}px,0)`,
         width: `${width}px`,
-        transition: `transform .5s linear`
+        transition: `background .5s linear`,
+        'background-color': `rgb(${255 - left%255}, ${255 - top%255}, ${(255 - left+top)/255})`
       }
     }
   },

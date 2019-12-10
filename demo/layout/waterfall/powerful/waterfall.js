@@ -23,6 +23,13 @@ Vue.component('waterfall', {
       default: 0
     }
   },
+  watch: {
+    totalHeight (a,b) {
+      this.$nextTick(() => {
+        this.getContainerWidth()
+      })
+    }
+  },
   methods: {
       add (child) {
         const index = this.$children.indexOf(child)
@@ -39,7 +46,7 @@ Vue.component('waterfall', {
         this.childrenHeights.splice(index, 1, this.$children[index].$el.getBoundingClientRect().height)
       },
       getContainerWidth () {
-        this.containerWidth = this.$el.getBoundingClientRect().width
+        this.containerWidth = this.$el.clientWidth
       },
       resize (index, update) {
         this.$nextTick(() => {
@@ -56,41 +63,41 @@ Vue.component('waterfall', {
       }
   },
   computed: {
-      colWidth () {
+    colWidth () {
       return (this.containerWidth + this.gutterWidth)/this.columnCount - this.gutterWidth
-      },
-      layouts () {
+    },
+    layouts () {
       const colHeights = new Array(this.columnCount).fill(0)
       const colItemCounts = new Array(this.columnCount).fill(0)
       const positions = []
       this.childrenHeights.forEach(height => {
-          let col, left, top
-          const minHeightCol = colHeights.indexOf(min(colHeights))
-          const minCountCol = colItemCounts.indexOf(min(colItemCounts))
-          if (colHeights[minHeightCol] === 0) {
-          col = minCountCol
-          top = 0
-          } else {
-          col = minHeightCol
-          top = colHeights[col] + this.gutterHeight
-          }
-          colHeights[col] = top + height
-          colItemCounts[col] += 1
-          left = (this.colWidth + this.gutterWidth) * col
-          positions.push({ left, top })
+        let col, left, top
+        const minHeightCol = colHeights.indexOf(min(colHeights))
+        const minCountCol = colItemCounts.indexOf(min(colItemCounts))
+        if (colHeights[minHeightCol] === 0) {
+        col = minCountCol
+        top = 0
+        } else {
+        col = minHeightCol
+        top = colHeights[col] + this.gutterHeight
+        }
+        colHeights[col] = top + height
+        colItemCounts[col] += 1
+        left = (this.colWidth + this.gutterWidth) * col
+        positions.push({ left, top })
       })
       const totalHeight = max(colHeights)
       return {
-          positions,
-          totalHeight
+        positions,
+        totalHeight
       }
-      },
-      positions () {
+    },
+    positions () {
       return this.layouts.positions || []
-      },
-      totalHeight () {
+    },
+    totalHeight () {
       return this.layouts.totalHeight || 0
-      }
+    }
   },
   mounted () {
       this.getContainerWidth()
