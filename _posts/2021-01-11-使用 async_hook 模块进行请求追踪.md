@@ -9,9 +9,7 @@ author: toBeTheLight
 * content
 {:toc}
 async_hooks 模块在 v8.0.0 版本正式加入 Node.js 的实验性 API。我们也是在 v8.x.x 版本下投入生产环境进行使用。
-
 那么什么是 async_hooks 呢？async_hooks 提供了追踪异步资源的 API，这种异步资源是具有关联回调的对象。
-
 简而言之，Async Hook 可以用来追踪异步回调。那么如何使用这种追踪能力，使用的过程中又有什么问题呢？
 
 
