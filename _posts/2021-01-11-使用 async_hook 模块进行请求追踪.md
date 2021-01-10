@@ -18,6 +18,8 @@ async_hooks 模块在 v8.0.0 版本正式加入 Node.js 的实验性 API。我�
 
 
 
+
+
 ## 认识 Async hooks
 
 v8.x.x 下的 async_hooks 主要有两部分组成，一个是 AsyncHook 用以追踪生命周期，一个是 AsyncResource 用于创建异步资源。
