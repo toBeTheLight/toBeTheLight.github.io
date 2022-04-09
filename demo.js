@@ -1,34 +1,30 @@
-function sleep(time) {
-  let startTime = new Date()
-  while (new Date() - startTime < time) {}
-  console.log('1s over')
-}
-setTimeout(() => {
-  console.log('setTimeout - 1')
-  setTimeout(() => {
-      console.log('setTimeout - 1 - 1')
-      sleep(1000)
-  })
-  new Promise(resolve => resolve()).then(() => {
-      console.log('setTimeout - 1 - then')
-      new Promise(resolve => resolve()).then(() => {
-          console.log('setTimeout - 1 - then - then')
-      })
-  })
-  sleep(1000)
-})
-
-setTimeout(() => {
-  console.log('setTimeout - 2')
-  setTimeout(() => {
-      console.log('setTimeout - 2 - 1')
-      sleep(1000)
-  })
-  new Promise(resolve => resolve()).then(() => {
-      console.log('setTimeout - 2 - then')
-      new Promise(resolve => resolve()).then(() => {
-          console.log('setTimeout - 2 - then - then')
-      })
-  })
-  sleep(1000)
-})
+var reachingPoints = function(sx, sy, tx, ty) {
+  while(true) {
+    if (tx === sx && ty === sy) return true
+    if (tx < sx || ty < sy) return false
+    if (tx > ty) {
+      if ((tx - sx) % ty === 0) return true
+      if (tx/ty > 2) {
+        tx = ty + (tx%ty)
+      } else {
+        tx -= ty
+      }
+    } else if (ty > tx) {
+      if ((ty - sy) % tx === 0) return true
+      if (ty/tx > 2) {
+        ty = tx + (ty%tx)
+      } else {
+        ty -= tx
+      }
+    } else {
+      return false
+    }
+    console.log(tx,ty)
+  }
+};
+console.log(
+  reachingPoints(1
+    ,18
+    ,999999992
+    ,18)
+)
