@@ -54,7 +54,7 @@ sync：sync 则是由页面客户端发起的，我们可以用来做一定的�
 
 ### Web Push
 
-web push 是依赖于浏览器客户端的推送能力，由浏览器厂商提供（大概）。可以在用户发起订阅后，在未打开过（大概）站点的情况下收到推送消息。
+web push 是依赖于浏览器客户端的推送能力，由浏览器厂商提供（大概）。可以在用户订阅后，在未打开过（大概）站点的情况下收到推送消息。
 
 ```js
 // client 部分，worker 为 serviceWorker.register 注册后的实例
@@ -66,7 +66,7 @@ const pushSubscription = worker.pushManager
 fetch('/server', pushSubscription)
 ```
 
-subscribe 的参数 applicationServerKey 为服务生成的公钥，完成订阅后 pushSubscription 中会包含分配的 endpoint 信息。
+subscribe 的参数 applicationServerKey 为服务生成的公钥，完成订阅后 pushSubscription 中会包含分配的 endpoint 信息，即此客户端接受消息的推送地址。
 
 然后需要将此 pushSubscription 信息提交给使用者的服务，在服务中使用相关信息进行消息推送，请参考其他文章。
 
