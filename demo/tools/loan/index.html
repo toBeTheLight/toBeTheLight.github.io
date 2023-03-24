@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .money-list {
+      display: flex;
+      flex-direction: row;
+    }
+    table {
+      border-collapse: collapse;
+      border: 1px solid #000;
+      margin: 10px;
+    }
+    .money-list__exist {
+      width: 100%;
+    }
+    h1,h2,h3 {
+      margin: 0;
+    }
+    td {
+      border: 1px solid #000;
+      padding: 5px;
+      height: 32px;
+    }
+    .money-details {
+      display: flex;
+      flex-direction: row;
+      align-items: self-start;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h3>款项</h3>
+    <div class="money-list">
+      <money-info @update="add" class="money-list__new"></money-info>
+      <table class="money-list__exist">
+        <tr>
+          <td>名称</td><td>总额</td><td>利率</td><td>年数</td><td>还款方式</td><td>操作</td>
+        </tr>
+        <tr v-for="(money, index) in moneyList" :key="index">
+          <td>{{ money.name }}</td>
+          <td>{{ money.total }}</td>
+          <td>{{ money.rate || 0 }}%</td>
+          <td>{{ money.years }}</td>
+          <td>{{ money.payment }}</td>
+          <td><button @click="remove(index)">反悔</button></td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <div>
+        <h3>汇总</h3>
+        <div>总支出：{{finallyTotal.total | toFixed }}</div>
+        <div>总利息：{{finallyTotal.interest | toFixed }}</div>
+        <div>总本金：{{finallyTotal.principal | toFixed }}</div>
+      </div>
+    </div>
+    <h3>月度还款</h3>
+    <div class="money-details">
+      <table v-for="part in totalPays">
+        <tr>
+          <td>月付</td><td>利息</td><td>本金</td>
+        </tr>
+        <tr v-for="month in part">
+          <td>{{ month.pay | toFixed }}</td>
+          <td>{{ month.interest | toFixed }}</td>
+          <td>{{ month.principal | toFixed}}</td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>月度总付</td><td>月度总利息</td><td>月度总本金</td>
+        </tr>
+        <tr v-for="sum in sumPays">
+          <td>{{ Number(sum.pay.toFixed(4)) }}</td>
+          <td>{{ Number(sum.interest.toFixed(4)) }}</td>
+          <td>{{ Number(sum.principal).toFixed(4) }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+  <script src="https://cdn.bootcss.com/lodash.js/4.17.15/lodash.min.js"></script>
+  <script src="./money-info.js"></script>
+  <script>
+    console.log(_)
+    const vm = new Vue({
+      el: '#app',
+      data () {
+        return {
+          tool: _,
+          moneyList: [
+            {
+              name: '首付',
+              total: 260,
+              payment: '一次性本金'
+            },{
+            name: '商业房贷',
+            total: 210,
+            rate: 4.85,
+            years: 25,
+            payment: '等额本息'
+          }, {
+            name: '公积金房贷',
+            total: 60,
+            rate: 3.1,
+            years: 25,
+            payment: '等额本息'
+          }, {
+            name: '中介费',
+            total: 570,
+            rate: 2,
+            payment: '一次性利息'
+          }, {
+            name: '契税',
+            total: 570,
+            rate: 1,
+            payment: '一次性利息'
+          }, {
+            name: '其他借款',
+            total: 30,
+            rate: 3,
+            years: 3,
+            payment: '月息年金'
+          }]
+        }
+      },
+      filters: {
+        toFixed (value) {
+          if (!value) return '-'
+          try {
+            return Number(value.toFixed(4))
+          } catch (error) {
+            console.error(value, error)            
+          }
+        }
+      },
+      computed: {
+        finallyTotal () {
+          return {
+            total: _.sumBy(this.sumPays, 'pay'),
+            interest: _.sumBy(this.sumPays, 'interest'),
+            principal: _.sumBy(this.sumPays, 'principal')
+          }
+        },
+        sumPays () {
+          return new Array(this.maxMonths).fill(0).map((n, index) => {
+            return {
+              pay: _.sumBy(this.totalPays, part => part[index] ? part[index].pay : 0),
+              interest: _.sumBy(this.totalPays, part => part[index] ? part[index].interest : 0),
+              principal: _.sumBy(this.totalPays, part => part[index] ? part[index].principal : 0)
+            }
+          })
+        },
+        totalPays () {
+          return this.moneyList.map((money, index) => {
+            if (money.payment === '等额本息') return this.equalInterest(money)
+            if (money.payment === '一次性本金') return [{ pay: money.total }]
+            if (money.payment === '一次性利息') return [{ pay: money.total * (money.rate / 100) }]
+            if (money.payment === '月息年金') return this.interestFirst(money)
+            return []
+          })
+        },
+        maxMonths () {
+          return _.max(this.totalPays.map(part => part.length))
+        }
+      },
+      methods: {
+        add (money) {
+          this.moneyList.push(money)
+        },
+        remove (index) {
+          this.moneyList.splice(index, 1)
+        },
+        equalInterest (money) {
+          const { total, rate, years } = money
+          const months = years * 12
+          const ratePerMonth = rate / (12 * 100)
+          let surplus = total
+          const result = [{ pay: 0, interest: 0, principal: 0 }]
+          while (surplus > 0) {
+            const monthPay = total * (ratePerMonth * Math.pow(1 + ratePerMonth, months)) / (Math.pow(1 + ratePerMonth, months) - 1)
+            const monthInterest = surplus * ratePerMonth
+            const monthPrincipal = monthPay - monthInterest
+            surplus -= monthPrincipal
+            result.push({
+              pay: monthPay,
+              interest: monthInterest,
+              principal: monthPrincipal
+            })
+          }
+          return result
+        },
+        interestFirst (money) {
+          const { total, rate, years } = money
+          const months = years * 12
+          const ratePerMonth = rate / (12 * 100)
+          let surplus = total
+          const result = [{ pay: 0, interest: 0, principal: 0 }]
+          let n = 1
+          while (surplus > 0) {
+            const monthInterest = surplus * ratePerMonth
+            let principal = 0 
+            if (n % 12 === 0) {
+              principal = total / years
+            }
+            const monthPay = monthInterest + principal
+            surplus -= principal
+            n += 1
+            result.push({
+              pay: monthPay,
+              interest: monthInterest,
+              principal: principal
+            })
+          }
+          return result
+        }
+      }
+    })
+  </script>
+</body>
+</html>
